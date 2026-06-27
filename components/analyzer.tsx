@@ -4,16 +4,19 @@ import { AnimatePresence, motion } from "motion/react"
 import { Sparkles } from "lucide-react"
 import { useRef, useState } from "react"
 import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 import { analyzeResume } from "@/actions/analyze"
 import { AnalyzingOverlay } from "@/components/analyzing-overlay"
 import { FeatureCards } from "@/components/feature-cards"
 import { ResumeForm, type ResumeFormValues } from "@/components/resume-form"
 import { ResultsView } from "@/components/results/results-view"
 import type { Analysis } from "@/types/analysis"
+import { analysisStore } from "@/lib/store/analysis-store"
 
 type Status = "idle" | "loading" | "done"
 
 export function Analyzer() {
+  const router = useRouter()
   const [status, setStatus] = useState<Status>("idle")
   const [result, setResult] = useState<Analysis | null>(null)
   const resultsRef = useRef<HTMLDivElement>(null)
@@ -39,9 +42,8 @@ export function Analyzer() {
       return
     }
 
-    setResult(res.data)
-    setStatus("done")
-    requestAnimationFrame(() => resultsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }))
+    analysisStore.setAnalysis(res.data)
+    router.push("/dashboard")
   }
 
   function reset() {
