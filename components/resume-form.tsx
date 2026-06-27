@@ -95,7 +95,7 @@ export function ResumeForm({ onSubmit, loading }: ResumeFormProps) {
               placeholder="Paste the full job description here — responsibilities, requirements, and preferred skills..."
               maxLength={MAX_CHARS}
               aria-invalid={!!errors.jobDescription}
-              className="h-[300px] [field-sizing:fixed] resize-none overflow-y-auto"
+              className="min-h-[44px] max-h-[400px] resize-none overflow-y-auto"
               {...register("jobDescription", {
                 required: "Add a job description",
                 minLength: { value: 40, message: "Add a more detailed job description" },
