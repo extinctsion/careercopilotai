@@ -52,8 +52,8 @@ export function ResumeForm({ onSubmit, loading }: ResumeFormProps) {
   })
 
   return (
-    <form onSubmit={submit} className="w-full">
-      <div className="grid gap-4 md:grid-cols-3">
+    <form onSubmit={submit} className="mx-auto w-full max-w-4xl space-y-6">
+      <div className="flex flex-col gap-6">
         <Card className={cn(cardClass, "border-0 bg-transparent p-0 shadow-none")}>
           <div className={cardClass}>
             <Label htmlFor="jobTitle" className="flex items-center gap-2 text-sm font-medium">
@@ -74,7 +74,7 @@ export function ResumeForm({ onSubmit, loading }: ResumeFormProps) {
           </div>
         </Card>
 
-        <Card className={cn(cardClass, "border-0 bg-transparent p-0 shadow-none md:col-span-2")}>
+        <Card className={cn(cardClass, "border-0 bg-transparent p-0 shadow-none")}>
           <div className={cardClass}>
             <div className="flex items-center justify-between">
               <Label htmlFor="jobDescription" className="flex items-center gap-2 text-sm font-medium">
@@ -93,10 +93,9 @@ export function ResumeForm({ onSubmit, loading }: ResumeFormProps) {
             <Textarea
               id="jobDescription"
               placeholder="Paste the full job description here — responsibilities, requirements, and preferred skills..."
-              rows={4}
               maxLength={MAX_CHARS}
               aria-invalid={!!errors.jobDescription}
-              className="resize-none"
+              className="h-[300px] [field-sizing:fixed] resize-none overflow-y-auto"
               {...register("jobDescription", {
                 required: "Add a job description",
                 minLength: { value: 40, message: "Add a more detailed job description" },
@@ -105,10 +104,8 @@ export function ResumeForm({ onSubmit, loading }: ResumeFormProps) {
             <p className="min-h-4 text-xs text-destructive">{errors.jobDescription?.message}</p>
           </div>
         </Card>
-      </div>
 
-      <div className="mt-4 grid gap-4 md:grid-cols-3">
-        <Card className={cn(cardClass, "border-0 bg-transparent p-0 shadow-none md:col-span-2")}>
+        <Card className={cn(cardClass, "border-0 bg-transparent p-0 shadow-none")}>
           <div className={cardClass}>
             <Label className="flex items-center gap-2 text-sm font-medium">
               <FileUp className="size-4 text-primary" />
@@ -127,27 +124,27 @@ export function ResumeForm({ onSubmit, loading }: ResumeFormProps) {
             </p>
           </div>
         </Card>
+      </div>
 
-        <div className="flex items-stretch">
-          <Button
-            type="submit"
-            size="lg"
-            disabled={loading}
-            className="h-full w-full rounded-2xl text-base shadow-lg shadow-primary/20"
-          >
-            {loading ? (
-              <>
-                <Loader2 className="size-5 animate-spin" />
-                Analyzing
-              </>
-            ) : (
-              <>
-                Analyze Resume
-                <ArrowRight className="size-5" />
-              </>
-            )}
-          </Button>
-        </div>
+      <div className="flex justify-center pt-4">
+        <Button
+          type="submit"
+          size="lg"
+          disabled={loading}
+          className="h-14 w-full max-w-md rounded-2xl text-lg font-semibold shadow-xl shadow-primary/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
+        >
+          {loading ? (
+            <>
+              <Loader2 className="mr-2 size-6 animate-spin" />
+              Analyzing Resume...
+            </>
+          ) : (
+            <>
+              Analyze Resume
+              <ArrowRight className="ml-2 size-6" />
+            </>
+          )}
+        </Button>
       </div>
     </form>
   )
